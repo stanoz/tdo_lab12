@@ -1,10 +1,10 @@
 pipeline {
     agent {
-        docker { image 'stanoz03/custom-jenkins-build-agent:1.0.1' args '-u root' }
+        docker { image 'stanoz03/custom-jenkins-build-agent:1.0.1'; args '-u root' }
     }
-    stages{
+    stages {
         stage('test') {
-            step('msg') {
+            steps {
                 echo 'Hello World'
             }
         }
