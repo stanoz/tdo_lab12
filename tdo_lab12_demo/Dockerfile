@@ -1,18 +1,20 @@
-FROM maven:3.9.9-eclipse-temurin-21-alpine
+FROM jenkins/agent
 
 USER root
 
-RUN apk update && apk add --no-cache \
+RUN apt-get update && apt-get install -y \
+    docker.io \
     git \
     curl \
     jq \
-    docker-cli \
-    && rm -rf /var/cache/apk/*
+    && rm -rf /var/lib/apt/lists/*
 
-RUN addgroup -g 1000 docker \
-    && adduser -D -u 1000 -G docker jenkins \
-    && addgroup jenkins docker
+ARG MAVEN_VERSION=3.9.9
+RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+    | tar -xzC /opt/ \
+    && ln -s /opt/apache-maven-${MAVEN_VERSION}/bin/mvn /usr/bin/mvn
+
+ENV MAVEN_HOME=/opt/apache-maven-${MAVEN_VERSION} \
+    MAVEN_CONFIG="/root/.m2"
 
 USER jenkins
-
-WORKDIR /var/jenkins_home
