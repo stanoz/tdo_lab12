@@ -11,8 +11,10 @@ pipeline {
         }
         stage('Test') {
             steps{
-                    sh './tdo_lab12_demo/mvn test'
-                    junit '**/target/reports/*.xml'
+                    dir('tdo_lab12_demo') {
+                    sh 'mvn test'
+                    junit 'target/reports/*.xml'
+                    }
             }
         }
     }
