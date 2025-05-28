@@ -10,8 +10,10 @@ pipeline {
             }
         }
         stage('Test') {
-            sh 'mvn test'
-            junit '**/target/reports/*.xml'
+            steps{
+                    sh 'mvn test'
+                    junit '**/target/reports/*.xml'
+            }
         }
     }
 }
