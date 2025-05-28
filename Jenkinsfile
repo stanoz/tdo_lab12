@@ -13,7 +13,7 @@ pipeline {
             steps{
                     dir('tdo_lab12_demo') {
                     sh 'mvn test'
-                    junit 'target/reports/*.xml'
+                    junit 'target/surefire-reports/*.xml'
                     }
             }
         }
