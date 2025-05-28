@@ -4,10 +4,14 @@ pipeline {
         args '-u root -v /var/run/docker.sock:/var/run/docker.sock --entrypoint=""' }
     }
     stages {
-        stage('test') {
+        stage('Checkout') {
             steps {
-                echo 'Hello World'
+                checkout scm
             }
+        }
+        stage('Test') {
+            sh 'mvn test'
+            junit '**/target/reports/*.xml'
         }
     }
 }
