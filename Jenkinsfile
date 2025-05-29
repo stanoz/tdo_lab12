@@ -19,8 +19,11 @@ pipeline {
         }
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'target/surefire-reports/*.xml', fingerprint: true
+                dir('tdo_lab12_demo'){
+                    archiveArtifacts artifacts: 'target/surefire-reports/*.xml', fingerprint: true
+                }
             }
         }
+
     }
 }
