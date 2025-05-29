@@ -40,7 +40,7 @@ pipeline {
         }
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", usernameValue: 'DOCKER_USER', passwordValue: 'DOCKER_PASS')]){
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]){
                     sh """ 
                         "$DOCKER_PASS" | docker login -u "${DOCKER_USER}" --password-stdin 
                         docker push stanoz03/tdo_lab12_demo:${env.BUILD_NUMBER}
