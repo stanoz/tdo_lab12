@@ -33,7 +33,7 @@ pipeline {
                     script {
                     def imageName = 'stanoz03/tdo_lab12_demo'
                     def image = docker.build("${imageName}:${env.BUILD_NUMBER}")
-                    def image = docker.build("${imageName}:latest")
+                    def image2 = docker.build("${imageName}:latest")
                     }
                 }
             }
