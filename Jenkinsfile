@@ -39,7 +39,8 @@ pipeline {
                 sh "docker push stanoz03/tdo_lab12_demo:latest"
             }
         }
-        post {
+    }
+    post {
             always {
                 script {
                     sh "docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG} || true"
@@ -51,5 +52,4 @@ pipeline {
                 }
             }
         }
-    }
 }
