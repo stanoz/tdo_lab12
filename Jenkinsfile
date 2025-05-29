@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: "${REPORT_DIR}/*.xml", onlyIfSuccessful: false
+                archiveArtifacts artifacts: 'target/surefire-reports/*.xml', fingerprint: true
             }
         }
     }
