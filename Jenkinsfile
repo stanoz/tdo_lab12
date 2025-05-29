@@ -1,7 +1,10 @@
 pipeline {
     agent {
         docker { image 'stanoz03/custom-jenkins-agent:1.0.1'; 
-        args '-u root -v /var/run/docker.sock:/var/run/docker.sock --entrypoint=""' }
+        args '-u root -v /var/run/docker.sock:/var/run/docker.sock' }
+    }
+    environment {
+        DOCKERHUB_CREDENTIALS = 'docker-credentials'
     }
     stages {
         stage('Checkout') {
@@ -37,8 +40,10 @@ pipeline {
         }
         stage('Push Docker Image') {
             steps {
-                sh "docker push stanoz03/tdo_lab12_demo:${env.BUILD_NUMBER}"
-                sh "docker push stanoz03/tdo_lab12_demo:latest"
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", usernameValue: 'DOCKER_USER', passwordValue: 'DOCKER_PASS')]){
+                    sh "docker push stanoz03/tdo_lab12_demo:${env.BUILD_NUMBER}"
+                    sh "docker push stanoz03/tdo_lab12_demo:latest"
+                }
             }
         }
     }
