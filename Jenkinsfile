@@ -33,19 +33,19 @@ pipeline {
                     script {
                     def imageName = 'stanoz03/tdo_lab12_demo'
                     def image = docker.build("${imageName}:${env.BUILD_NUMBER}")
-                    image.tag('latest')
+                    def image = docker.build("${imageName}:latest")
                     }
                 }
             }
         }
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]){
-                    sh """ 
-                        "$DOCKER_PASS" | docker login -u "${DOCKER_USER}" --password-stdin 
-                        docker push stanoz03/tdo_lab12_demo:${env.BUILD_NUMBER}
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                        docker push stanoz03/tdo_lab12_demo:${BUILD_NUMBER}
                         docker push stanoz03/tdo_lab12_demo:latest
-                    """
+                    '''
                 }
             }
         }
