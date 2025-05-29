@@ -45,8 +45,8 @@ pipeline {
     post {
             always {
                 script {
-                    sh "docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG} || true"
-                    sh "docker rmi -f ${IMAGE_NAME}:latest || true"
+                    sh "docker rmi -f stanoz03/tdo_lab12_demo:${env.BUILD_NUMBER} || true"
+                    sh "docker rmi -f stanoz03/tdo_lab12_demo:latest || true"
 
                     sh "docker ps -a -q -f status=exited | xargs --no-run-if-empty docker rm"
 
