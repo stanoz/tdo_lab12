@@ -26,10 +26,12 @@ pipeline {
         }
          stage('Build Docker Image') {
             steps {
-                script {
+                dir('tdo_lab12_demo'){
+                    script {
                     def imageName = 'stanoz03/tdo_lab12_demo'
                     def image = docker.build("${imageName}:${env.BUILD_NUMBER}")
                     image.tag('latest')
+                    }
                 }
             }
         }
